@@ -1,0 +1,170 @@
+# EditorConfig properties applicable to a wide range of C-like languages, for example C, C++, Java, JavaScript, PHP
+
+[{*c,*.java,*.cpp,*.php, *.js}] # and other
+
+#-----------------------------------------------------------------------------------------------------------------------
+# When there are multiples fields in a class, aligns them by names, equals signs and values. For example:
+#
+#  public int    x     = 1;
+#  public String name  = "abc";
+#  public float  ratio = 0.3;
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# align_group_field_declarations = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Aligns a group of assignments not separated by a blank line, other operator or a comment, by equals sign. For example:
+#
+#   x     = 1;
+#   name  = "abc";
+#   ratio = 0.3;
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# align_consecutive_assignments = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Aligns operands of multiline binary operation. For example:
+#
+#   total = a +
+#           b +
+#           c;
+#
+#  or:
+#
+#   total = a
+#           + b
+#           + c;
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# align_multiline_binary_operation = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Align multiline chained calls by chained call delimiter or name, for example:
+#
+#  object.first()
+#        .second()
+#        .third();
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# align_multiline_chained_methods = true|false
+
+# align_multiline_extends_list = true|false
+# align_multiline_for = true|false
+# align_multiline_parameters = true|false
+# align_multiline_parameters_in_calls = true|false
+# align_multiline_ternary_operation = true|false
+# align_subsequent_simple_methods = true|false
+
+
+# array_initializer_left_brace_on_next_line = true|false
+# array_initializer_wrap = off|normal|on_every_item|split_into_lines
+# assignment_wrap = off|normal|on_every_item|split_into_lines
+# binary_operation_sign_on_next_line = true|false
+# binary_operation_wrap = off|normal|on_every_item|split_into_lines
+# blank_lines_after_class_header = <number>
+# blank_lines_after_imports = <number>
+# blank_lines_around_class = <number>
+# blank_lines_around_field = <number>
+# blank_lines_around_field_in_interface = <number>
+# blank_lines_around_function = <number>
+# blank_lines_around_method = <number>
+# blank_lines_around_method_in_interface = <number>
+# brace_style = end_of_line
+# call_parameters_left_paren_on_next_line = true|false
+# call_parameters_right_paren_on_next_line = true|false
+# call_parameters_wrap = off|normal|on_every_item|split_into_lines
+# catch_on_new_line = true|false
+# chained_call_dot_on_new_line = true|false
+# continuation_indent_size = 8
+# do_not_indent_top_level_class_members = true|false
+# do_while_brace_force = never|if_multiline|always
+# else_on_new_line = true|false
+# extends_keyword_wrap = off|normal|on_every_item|split_into_lines
+# extends_list_wrap = off|normal|on_every_item|split_into_lines
+# finally_on_new_line = true|false
+# for_brace_force = never|if_multiline|always
+# for_statement_left_paren_on_next_line = true|false
+# for_statement_right_paren_on_next_line = true|false
+# for_statement_wrap = off|normal|on_every_item|split_into_lines
+# if_brace_force = never|if_multiline|always
+# indent_case_from_switch = true|false
+# keep_blank_lines_in_code = 2
+# keep_blank_lines_in_declarations = 2
+# keep_control_statement_in_one_line = true|false
+# keep_first_column_comment = true|false
+# keep_line_breaks = true|false
+# line_comment_add_space = true|false
+# line_comment_at_first_column = true|false
+# method_brace_style = end_of_line
+# method_call_chain_wrap = off|normal|on_every_item|split_into_lines
+# method_parameters_left_paren_on_next_line = true|false
+# method_parameters_right_paren_on_next_line = true|false
+# method_parameters_wrap = off|normal|on_every_item|split_into_lines
+# modifier_list_wrap = off|normal|on_every_item|split_into_lines
+# space_after_colon = true|false
+# space_after_comma = true|false
+# space_after_for_semicolon = true|false
+# space_after_type_cast = true|false
+# space_before_catch_keyword = true|false
+# space_before_catch_left_brace = true|false
+# space_before_catch_parentheses = true|false
+# space_before_class_left_brace = true|false
+# space_before_colon = true|false
+# space_before_comma = true|false
+# space_before_do_left_brace = true|false
+# space_before_else_keyword = true|false
+# space_before_else_left_brace = true|false
+# space_before_finally_keyword = true|false
+# space_before_finally_left_brace = true|false
+# space_before_for_left_brace = true|false
+# space_before_for_parentheses = true|false
+# space_before_for_semicolon = true|false
+# space_before_if_left_brace = true|false
+# space_before_if_parentheses = true|false
+# space_before_method_call_parentheses = true|false
+# space_before_method_left_brace = true|false
+# space_before_method_parentheses = true|false
+# space_before_switch_left_brace = true|false
+# space_before_switch_parentheses = true|false
+# space_before_try_left_brace = true|false
+# space_before_try_parentheses = true|false
+# space_before_while_keyword = true|false
+# space_before_while_left_brace = true|false
+# space_before_while_parentheses = true|false
+# spaces_around_additive_operators = true|false
+# spaces_around_assignment_operators = true|false
+# spaces_around_bitwise_operators = true|false
+# spaces_around_equality_operators = true|false
+# spaces_around_logical_operators = true|false
+# spaces_around_multiplicative_operators = true|false
+# spaces_around_relational_operators = true|false
+# spaces_around_shift_operators = true|false
+# spaces_around_unary_operator = true|false
+# spaces_within_array_initializer_braces = true|false
+# spaces_within_braces = true|false
+# spaces_within_brackets = true|false
+# spaces_within_cast_parentheses = true|false
+# spaces_within_catch_parentheses = true|false
+# spaces_within_empty_array_initializer_braces = true|false
+# spaces_within_empty_method_call_parentheses = true|false
+# spaces_within_empty_method_parentheses = true|false
+# spaces_within_for_parentheses = true|false
+# spaces_within_if_parentheses = true|false
+# spaces_within_method_call_parentheses = true|false
+# spaces_within_method_parentheses = true|false
+# spaces_within_parentheses = true|false
+# spaces_within_switch_parentheses = true|false
+# spaces_within_try_parentheses = true|false
+# spaces_within_while_parentheses = true|false
+# special_else_if_treatment = true|false
+# ternary_operation_signs_on_next_line = true|false
+# ternary_operation_wrap = off|normal|on_every_item|split_into_lines
+# throws_keyword_wrap = off|normal|on_every_item|split_into_lines
+# throws_list_wrap = off|normal|on_every_item|split_into_lines
+# while_brace_force = never|if_multiline|always
+# wrap_comments = true|false
+# wrap_first_method_in_call_chain = true|false

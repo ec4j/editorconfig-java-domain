@@ -1,0 +1,66 @@
+# General EditorConfig properties common for all languages
+
+[*]
+
+# Standard unified properties by EditorConfig organization
+# See: https://editorconfig.org/#file-format-details
+
+# indent_style = tab|space
+# indent_size = <number>|tab
+# tab_width = <number>
+# end_of_line = lf|cr|crlf
+# charset = latin1|utf-8|utf-8-bom|utf-16be|utf-16le
+
+# Extensions
+
+#-----------------------------------------------------------------------------------------------------------------------
+# If put in a comment, tells the IDE to skip formatting for all subsequent lines until formatter on tag is found.
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# formatter_off_tag = <string>
+
+#-----------------------------------------------------------------------------------------------------------------------
+# If put in a comment, tells the IDE to start formatting all subsequent lines.
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# formatter_on_tag = <string>
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Tells if a formatter can accept regular expressions to find formatter off/on markers.
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# formatter_tags_accept_regexp = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Tells the IDE to automatically wrap long lines when a typed line exceeds the value specified in max_line_length
+# property.
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# wrap_on_typing = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Tells not to strip indents from empty lines to keep the same level of indentation as in the code above/below.
+# For example:
+#
+#  void foo() {
+#      print("bar");
+#      <-- keep 4 spaces on this line to align with "print" above.
+#  }
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# keep_indents_on_empty_lines = true|false
+
+#-----------------------------------------------------------------------------------------------------------------------
+# Use tabs for indentation but align with spaces to keep items align even if tab size changes.
+#
+# Status: DRAFT
+#-----------------------------------------------------------------------------------------------------------------------
+# smart_tabs = true|false
+
+
+
