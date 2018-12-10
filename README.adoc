@@ -1,0 +1,56 @@
+ifdef::env-github[]
+:warning-caption: :warning:
+endif::[]
+
+= `editorconfig-java-domain`
+
+https://github.com/ec4j/editorconfig-java-domain/blob/master/LICENSE[image:https://img.shields.io/github/license/ec4j/editorconfig-java-domain.svg[License]]
+http://search.maven.org/#search%7Cga%7C1%7Corg.ec4j.java-domain[image:https://img.shields.io/maven-central/v/org.ec4j.java-domain/editorconfig-java-domain.svg[Maven
+Central]]
+http://travis-ci.org/ec4j/editorconfig-java-domain[image:https://img.shields.io/travis/ec4j/editorconfig-java-domain/master.svg?logo=travis&color=white&label=Travis+CI[Travis CI build status]]
+https://ci.appveyor.com/project/ppalaga/editorconfig-java-domain[image:https://img.shields.io/appveyor/ci/ppalaga/editorconfig-java-domain/master.svg?logo=appveyor&color=white&label=AppVeyor+Windows+CI[AppVeyor Windows CI build status]]
+
+`editorconfig-java-domain` aims at defining `http://editorconfig.org/[.editorconfig]` properties specific to Java
+programming language.
+
+WARNING: `editorconfig-java-domain` is a work in progress. Please use
+https://github.com/ec4j/editorconfig-java-domain/issues[GitHub Issues] to report bugs and/or discuss things.
+
+
+== How to work with `editorconfig-java-domain`
+
+=== Proposed `.editorconfig` properties
+
+The proposed `.editorconfig` properties are hosted in the following files:
+
+* `link:general.editorconfig[general.editorconfig]`
+* `link:c-like.editorconfig[c-like.editorconfig]`
+* `link:java.editorconfig[java.editorconfig]`
+
+=== Technology Compatibility Kit (TCK)
+
+We also work on a suite of tests for checking that a particular formatter implementation complies with our
+`.editorconfig` property definitions.
+
+We currently run the tests () against the following Java formatter implementations:
+
+* `link:jdt/src/main/java/org/ec4j/java/domain/jdt/JdtFormatter.java[JdtFormatter]` - a formatter based on Eclipse Java Development Tools' (JDT) Java formatter
+
+To run the test suite, you need
+
+* Java 8+
+* optionally Maven 3.6.0+, if you do not want to use `mvnw` available in the source tree
+
+==== How to run the test suite
+
+To run the tests against the JDT formatter:
+
+[source,shell]
+----
+./mvnw clean verify -Pjdt
+----
+
+== Misc.
+
+* All code and contributions are under link:/LICENSE[Apache License]
+* Issues and Discussions: https://github.com/ec4j/editorconfig-java-domain/issues
