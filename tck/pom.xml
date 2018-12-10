@@ -1,0 +1,154 @@
+<!--
+
+    Copyright (c) 2018 EditorConfig Java Domain
+    project contributors as indicated by the @author tags.
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.ec4j.java-domain</groupId>
+    <artifactId>editorconfig-java-domain-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>editorconfig-java-domain-tck</artifactId>
+
+  <name>EditorConfig Java Domain TCK</name>
+  <description>EditorConfig Java Domain Technology Compatibility Kit (TCK)</description>
+
+  <properties>
+    <generated.tck.tests.dir>${project.build.directory}/generated-test-sources/tck-tests</generated.tck.tests.dir>
+    <baseDir>${project.basedir}</baseDir>
+    <checkstyle.excludes>target/**,src/test/resources/**/*.java,src/build/template/*.java</checkstyle.excludes>
+  </properties>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.ec4j.java-domain</groupId>
+      <artifactId>editorconfig-java-domain-tck-spi</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+  </dependencies>
+
+  <build>
+    <plugins>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.gmaven</groupId>
+        <artifactId>groovy-maven-plugin</artifactId>
+        <executions>
+            <execution>
+                <id>generate-test-classes</id>
+                <goals>
+                    <goal>execute</goal>
+                </goals>
+                <phase>generate-test-sources</phase>
+                <configuration>
+                    <source>${project.basedir}/src/build/groovy/generate-test-classes.groovy</source>
+                </configuration>
+            </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+            <version>2.5.4</version>
+            <type>pom</type>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-test-sources</id>
+            <phase>generate-test-sources</phase>
+            <goals>
+              <goal>add-test-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${generated.tck.tests.dir}</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>jdt</id>
+
+      <dependencies>
+
+        <dependency>
+          <groupId>org.ec4j.java-domain</groupId>
+          <artifactId>editorconfig-java-domain-jdt</artifactId>
+          <scope>test</scope>
+        </dependency>
+
+      </dependencies>
+
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>jdt-test</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+
+</project>
