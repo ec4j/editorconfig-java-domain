@@ -149,6 +149,83 @@
         </plugins>
       </build>
     </profile>
+
+    <profile>
+      <id>ij</id>
+
+      <properties>
+        <ij.dist.dir>${project.build.directory}/ij-dist</ij.dist.dir>
+        <ij.bin.dir>${ij.dist.dir}/bin</ij.bin.dir>
+      </properties>
+
+      <dependencies>
+
+        <dependency>
+          <groupId>org.ec4j.java-domain</groupId>
+          <artifactId>editorconfig-java-domain-ij</artifactId>
+          <scope>test</scope>
+        </dependency>
+
+        <dependency>
+          <groupId>com.jetbrains.intellij.idea</groupId>
+          <artifactId>ideaIC</artifactId>
+          <type>zip</type>
+          <scope>test</scope>
+        </dependency>
+
+      </dependencies>
+
+      <build>
+        <plugins>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack</id>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>com.jetbrains.intellij.idea</groupId>
+                      <artifactId>ideaIC</artifactId>
+                      <version>${version.ij}</version>
+                      <type>zip</type>
+                      <overWrite>true</overWrite>
+                      <outputDirectory>${ij.dist.dir}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>ij-test</id>
+                <phase>test</phase>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <configuration>
+                  <systemProperties>
+                    <ij.bin.dir>${ij.bin.dir}</ij.bin.dir>
+                  </systemProperties>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+
+        </plugins>
+      </build>
+    </profile>
   </profiles>
 
 </project>

@@ -7,6 +7,12 @@ jdk:
   - openjdk8
   - openjdk11
 
+# Setting the same var twice in the env actually makes Travis create a matrix
+# - i.e. there will be two separate executions, one for each value
+env:
+  - PROFILE=jdt
+  - PROFILE=ij
+
 notifications:
   email: false
 
@@ -14,4 +20,4 @@ notifications:
 install: true
 
 script:
-- ./mvnw clean verify -Pjdt
+- ./mvnw clean verify -P${PROFILE}
