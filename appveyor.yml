@@ -19,11 +19,15 @@
 environment:
   JAVA_HOME: C:\Program Files\Java\jdk1.8.0
 
+  matrix:
+    - PROFILE: jdt
+    - PROFILE: ij
+
 install:
   - cmd: SET PATH=C:\Users\appveyor\.m2\apache-maven-3.6.0-bin\2dakv70gp803gtm5ve1ufmvttn\apache-maven-3.6.0\bin;%JAVA_HOME%\bin;%PATH%
   
 build_script:
-  - .\mvnw.cmd clean verify -Pjdt
+  - .\mvnw.cmd clean verify -P%PROFILE%
 
 cache:
   - C:\Users\appveyor\.m2\wrapper
