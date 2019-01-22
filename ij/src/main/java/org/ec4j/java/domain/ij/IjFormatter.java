@@ -86,6 +86,11 @@ public class IjFormatter implements Formatter {
         try {
             Files.createDirectories(tmpSourcePath.getParent());
             Files.copy(sourcePath, tmpSourcePath);
+            final Path editorConfigPath = sourcePath.getParent().resolve(".editorconfig");
+            if (!Files.exists(editorConfigPath)) {
+                throw new IllegalStateException(String.format("File \"%s\" must exist", editorConfigPath));
+            }
+            Files.copy(editorConfigPath, tmpSourcePath.getParent().resolve(".editorconfig"));
 
             final ProcessBuilder pb = new ProcessBuilder();
             pb.command(command);
