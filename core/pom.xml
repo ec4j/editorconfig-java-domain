@@ -25,32 +25,16 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>editorconfig-java-domain-jdt</artifactId>
+  <artifactId>editorconfig-java-domain-core</artifactId>
 
-  <name>EditorConfig Java Domain Eclipse JDT Adapter</name>
-  <description>EditorConfig Java Domain Eclipse Java Develpment Tools (JDT) Adapter</description>
+  <name>EditorConfig Java Domain Core</name>
+  <description>EditorConfig Java Domain Core module</description>
 
   <dependencies>
 
     <dependency>
       <groupId>org.ec4j.core</groupId>
       <artifactId>ec4j-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.ec4j.java-domain</groupId>
-      <artifactId>editorconfig-java-domain-core</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.ec4j.java-domain</groupId>
-      <artifactId>editorconfig-java-domain-tck-spi</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.eclipse.jdt</groupId>
-      <artifactId>org.eclipse.jdt.core</artifactId>
-      <version>3.15.0</version>
     </dependency>
 
   </dependencies>

@@ -88,9 +88,9 @@
       </snapshots>
     </repository>
   </repositories>
-  
 
   <modules>
+    <module>core</module>
     <module>tck-spi</module>
     <module>jdt</module>
     <module>ij</module>
@@ -101,7 +101,7 @@
 
     <!-- Dependency versions in alphabectic order -->
     <version.junit>4.12</version.junit>
-    <version.org.ec4j.core>0.0.3</version.org.ec4j.core>
+    <version.org.ec4j.core>0.2.0</version.org.ec4j.core>
     <version.ij>182.5107.16</version.ij>
 
     <!-- Plugins and their dependencies -->
@@ -185,6 +185,12 @@
         <groupId>org.ec4j.core</groupId>
         <artifactId>ec4j-core</artifactId>
         <version>${version.org.ec4j.core}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.ec4j.java-domain</groupId>
+        <artifactId>editorconfig-java-domain-core</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
       </dependency>
 
       <dependency>

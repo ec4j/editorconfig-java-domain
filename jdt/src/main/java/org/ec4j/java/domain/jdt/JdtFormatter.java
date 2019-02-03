@@ -27,11 +27,14 @@ import java.util.TreeMap;
 import org.ec4j.core.Cache;
 import org.ec4j.core.Cache.Caches;
 import org.ec4j.core.EditorConfigLoader;
+import org.ec4j.core.PropertyTypeRegistry;
 import org.ec4j.core.Resource.Resources;
 import org.ec4j.core.ResourceProperties;
 import org.ec4j.core.ResourcePropertiesService;
+import org.ec4j.core.model.EditorConfig;
 import org.ec4j.core.model.PropertyType;
 import org.ec4j.core.model.PropertyType.IndentStyleValue;
+import org.ec4j.core.model.Version;
 import org.ec4j.java.domain.tck.spi.Formatter;
 import org.eclipse.jdt.core.formatter.CodeFormatter;
 import org.eclipse.jdt.core.formatter.DefaultCodeFormatterConstants;
@@ -49,7 +52,27 @@ import org.eclipse.text.edits.TextEdit;
  * @author <a href="https://github.com/ppalaga">Peter Palaga</a>
  */
 public class JdtFormatter implements Formatter {
-    private static final Integer DEFAULT_JAVA_INDENT_SIZE = Integer.valueOf(4);
+
+    static class WrappedResourceProperties {
+        private final ResourceProperties properties;
+
+        WrappedResourceProperties(ResourceProperties properties) {
+            super();
+            this.properties = properties;
+        }
+
+        public <T> T getValue(PropertyType<T> type) {
+            T result = properties.getValue(type, null, true);
+            assert result != null : "Value of "+ type.getName() + " property must not be null. Missing a default?";
+            return result;
+        }
+
+        public <T> T getValue(String name) {
+            T result = properties.getValue(name, null, true);
+            assert result != null : "Value of "+ name + " property must not be null. Missing a default?";
+            return result;
+        }
+    }
 
     /**
      * Translated the given EditorConfig {@link ResourceProperties} to a {@link Map} of JDT Formatter's properties.
@@ -58,9 +81,9 @@ public class JdtFormatter implements Formatter {
      * @return a new {@link Map}
      */
     private static Map<String, String> toJdtFormatterOptions(ResourceProperties properties) {
+        final WrappedResourceProperties wrappedProperties = new WrappedResourceProperties(properties);
         Map<String, String> result = new TreeMap<>();
-        final IndentStyleValue indentStyle = properties.getValue(PropertyType.indent_style, IndentStyleValue.space,
-                false);
+        final IndentStyleValue indentStyle = wrappedProperties.getValue(PropertyType.indent_style);
         switch (indentStyle) {
         case tab:
         case space:
@@ -71,10 +94,10 @@ public class JdtFormatter implements Formatter {
                     String.format("Unexpected %s: [%s]", IndentStyleValue.class.getName(), indentStyle));
         }
 
-        final Integer indentSize = properties.getValue(PropertyType.indent_size, DEFAULT_JAVA_INDENT_SIZE, false);
+        final Integer indentSize = wrappedProperties.getValue(PropertyType.indent_size);
         result.put(DefaultCodeFormatterConstants.FORMATTER_TAB_SIZE, indentSize.toString());
 
-        final Integer maxLineLength = properties.getValue(PropertyType.max_line_length, Integer.MAX_VALUE, true);
+        final Integer maxLineLength = wrappedProperties.getValue(PropertyType.max_line_length);
         result.put(DefaultCodeFormatterConstants.FORMATTER_LINE_SPLIT, maxLineLength.toString());
 
         return result;
@@ -84,18 +107,34 @@ public class JdtFormatter implements Formatter {
 
     public JdtFormatter() {
         final Cache myCache = Caches.permanent();
-        EditorConfigLoader myLoader = EditorConfigLoader.default_();
-        resourcePropertiesService = ResourcePropertiesService.builder()
-                .cache(myCache)
-                .loader(myLoader)
+
+        final PropertyTypeRegistry registry = PropertyTypeRegistry.builder() //
+                .defaults() //
+                .type(PropertyType.max_line_length) //
                 .build();
+        final EditorConfigLoader myLoader = EditorConfigLoader.of(Version.CURRENT, registry);
+        try {
+            final EditorConfig javaDefaults = myLoader.load(Resources.ofClassPath( //
+                    this.getClass().getClassLoader(), //
+                    "/java-defaults.editorconfig", //
+                    StandardCharsets.UTF_8));
+
+            resourcePropertiesService = ResourcePropertiesService.builder() //
+                    .defaultEditorConfig(javaDefaults) //
+                    .cache(myCache) //
+                    .loader(myLoader) //
+                    .build();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public String format(Path sourcePath) {
         try {
-            final ResourceProperties properties = resourcePropertiesService.queryProperties(Resources.ofPath(sourcePath, StandardCharsets.UTF_8));
+            final ResourceProperties properties = resourcePropertiesService
+                    .queryProperties(Resources.ofPath(sourcePath, StandardCharsets.UTF_8));
             final Charset charset = Charset.forName(properties.getValue(PropertyType.charset, "utf-8", true));
             final String source = new String(Files.readAllBytes(sourcePath), charset);
 
@@ -104,7 +143,10 @@ public class JdtFormatter implements Formatter {
             final int kind = (sourcePath.getFileName().toString().equals(IModule.MODULE_INFO_JAVA)
                     ? CodeFormatter.K_MODULE_INFO
                     : CodeFormatter.K_COMPILATION_UNIT) | CodeFormatter.F_INCLUDE_COMMENTS;
-            final PropertyType.EndOfLineValue eol = properties.getValue(PropertyType.end_of_line, null, true);
+            PropertyType.EndOfLineValue eol = properties.getValue(PropertyType.end_of_line, null, true);
+            if (eol == null) {
+                eol = PropertyType.EndOfLineValue.autodetect(source);
+            }
             final TextEdit edit = formatter.format(kind, source, 0, source.length(), 0, eol.getEndOfLineString());
 
             final IDocument doc = new Document(source);
