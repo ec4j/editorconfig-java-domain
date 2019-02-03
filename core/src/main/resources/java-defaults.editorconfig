@@ -1,0 +1,8 @@
+root = true
+
+[*.java]
+indent_style = space
+indent_size = 4
+
+# 2147483647 is java.lang.Integer.MAX_VALUE thus actually unlimited
+max_line_length = 2147483647

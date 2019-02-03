@@ -31,7 +31,6 @@ Files.createDirectories(generatedClassesDir)
 
 /* A Map from class names to lists of expected Java files. One test method will be generated for each expected Java file. */
 final Map<String, List<Path>> testClasses = new TreeMap<>();
-int pathLength = 0;
 
 /* Populate testClasses */
 testResourcesDir.eachFileRecurse(groovy.io.FileType.FILES) { path ->
@@ -44,7 +43,6 @@ testResourcesDir.eachFileRecurse(groovy.io.FileType.FILES) { path ->
             testClasses.put(className, javaFiles = new ArrayList<Path>())
         }
         javaFiles.add(path);
-        pathLength = path.getNameCount()
     }
 }
 
@@ -54,7 +52,6 @@ assert !testClasses.isEmpty()
 testClasses.each { className, javaFiles ->
     final StringBuilder testMethods = new StringBuilder()
     javaFiles.each { expectedJavaFile ->
-        assert expectedJavaFile.getNameCount() == pathLength
         final String fileName = expectedJavaFile.getFileName().toString();
         final Path javaFile = expectedJavaFile.getParent().resolve(fileName.replace(".expected", ""))
         final String testMethodName = fileName.replace(".expected.java", "").uncapitalize()
@@ -73,8 +70,13 @@ testClasses.each { className, javaFiles ->
 }
 
 String toTestClassName(Path expectedJavaPath) {
-    final Path valueDir = expectedJavaPath.getParent()
-    final Path propertyDir = valueDir.getParent()
-    final String snakeCased = propertyDir.getFileName().toString() + "_" + valueDir.getFileName().toString()
+    final List<String> segments = new ArrayList<>()
+    Path dir = expectedJavaPath.getParent()
+    /* Climb up the path up to the grouping directory, e.g. src/test/resources/basic */
+    while (dir.getNameCount() > 4) {
+        segments.add(dir.getFileName().toString())
+        dir = dir.getParent()
+    }
+    final String snakeCased = segments.reverse().join("_")
     return snakeCased.replaceAll(/_\w/){ it[1].toUpperCase() }.capitalize() + "Test"
 }
